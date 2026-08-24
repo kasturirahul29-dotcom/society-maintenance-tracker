@@ -3,7 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
 import { badRequest } from "@/lib/errors";
 import { ok, withRoute } from "@/lib/api";
-import { complaintCreateSchema, complaintQuerySchema } from "@/lib/validation";
+import {
+  complaintCreateSchema,
+  complaintQuerySchema,
+} from "@/lib/validation";
 import { saveComplaintPhoto } from "@/lib/upload";
 import { nextTicketNo } from "@/lib/tickets";
 import { getOverdueThresholdHours } from "@/lib/settings";
@@ -12,14 +15,31 @@ import { notifyAdmins } from "@/lib/mail";
 
 const include = {
   category: true,
-  createdBy: { select: { id: true, name: true, email: true, unitNumber: true } },
-  assignedTo: { select: { id: true, name: true, email: true } },
+  createdBy: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      unitNumber: true,
+    },
+  },
+  assignedTo: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+    },
+  },
 } as const;
 
 export const GET = withRoute(async (request) => {
   const user = await requireUser();
   const url = new URL(request.url);
-  const query = complaintQuerySchema.parse(Object.fromEntries(url.searchParams));
+
+  const query = complaintQuerySchema.parse(
+    Object.fromEntries(url.searchParams),
+  );
+
   const overdueHours = await getOverdueThresholdHours();
 
   const where: Prisma.ComplaintWhereInput = {};
@@ -106,6 +126,7 @@ export const GET = withRoute(async (request) => {
 
 export const POST = withRoute(async (request) => {
   const user = await requireUser();
+
   const contentType = request.headers.get("content-type") ?? "";
 
   let payload: {
@@ -166,7 +187,7 @@ export const POST = withRoute(async (request) => {
 
   const overdueHours = await getOverdueThresholdHours();
 
-  void notifyAdmins(
+  await notifyAdmins(
     `New complaint ${complaint.ticketNo}`,
     `${user.name} (${user.unitNumber ?? "no unit"}) filed a ${payload.priority.toLowerCase()} priority ${category.name} complaint:\n\n${payload.description}`,
   );
