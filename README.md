@@ -116,8 +116,6 @@ Install dependencies:
 
 
 
-```bash
-
 npm install
 
 
@@ -201,3 +199,5 @@ https://society-maintenance-tracker-rho-seven.vercel.app
 ### GitHub Repository
 
 https://github.com/kasturirahul29-dotcom/society-maintenance-tracker
+
+```bash
