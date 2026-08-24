@@ -1,4 +1,4 @@
-\# Atrium — Society Maintenance Tracker
+# Atrium — Society Maintenance Tracker
 
 
 
@@ -6,109 +6,109 @@ A full-stack society maintenance and complaint management portal built with Next
 
 
 
-\## Features
+## Features
 
 
 
-\### Resident
+### Resident
 
 
 
-\- Register and log in
+- Register and log in
 
-\- Submit maintenance complaints
+- Submit maintenance complaints
 
-\- Select complaint category and priority
+- Select complaint category and priority
 
-\- Upload complaint photos
+- Upload complaint photos
 
-\- View own complaints
+- View own complaints
 
-\- Track complaint status and history
+- Track complaint status and history
 
-\- Search and filter complaints
+- Search and filter complaints
 
-\- Filter complaints by date
+- Filter complaints by date
 
-\- View society notices
+- View society notices
 
-\- Receive email notifications when complaints are updated
-
-
-
-\### Admin
+- Receive email notifications when complaints are updated
 
 
 
-\- Admin dashboard
-
-\- View complaint statistics
-
-\- View complaints by status, priority, category, and SLA
-
-\- Search and filter complaints
-
-\- Filter complaints by date range
-
-\- Assign complaints to admin staff
-
-\- Update complaint status
-
-\- Add status/history notes
-
-\- Manage complaint categories
-
-\- Create, edit, pin, mark important, and delete notices
-
-\- Configure overdue/SLA threshold
-
-\- Email notifications to residents and admins
+### Admin
 
 
 
-\## Tech Stack
+- Admin dashboard
+
+- View complaint statistics
+
+- View complaints by status, priority, category, and SLA
+
+- Search and filter complaints
+
+- Filter complaints by date range
+
+- Assign complaints to admin staff
+
+- Update complaint status
+
+- Add status/history notes
+
+- Manage complaint categories
+
+- Create, edit, pin, mark important, and delete notices
+
+- Configure overdue/SLA threshold
+
+- Email notifications to residents and admins
 
 
 
-\- Next.js
-
-\- React
-
-\- TypeScript
-
-\- Prisma ORM
-
-\- PostgreSQL
-
-\- Tailwind CSS
-
-\- Zod
-
-\- JWT authentication with jose
-
-\- bcryptjs
-
-\- Nodemailer
-
-\- Brevo SMTP
+## Tech Stack
 
 
 
-\## Requirements
+- Next.js
+
+- React
+
+- TypeScript
+
+- Prisma ORM
+
+- PostgreSQL
+
+- Tailwind CSS
+
+- Zod
+
+- JWT authentication with jose
+
+- bcryptjs
+
+- Nodemailer
+
+- Brevo SMTP
 
 
 
-\- Node.js 20+
-
-\- PostgreSQL database
-
-\- SMTP credentials for email notifications
-
-\- Docker (optional, for local PostgreSQL)
+## Requirements
 
 
 
-\## Installation
+- Node.js 20+
+
+- PostgreSQL database
+
+- SMTP credentials for email notifications
+
+- Docker (optional, for local PostgreSQL)
+
+
+
+## Installation
 
 
 
@@ -122,11 +122,11 @@ npm install
 
 
 
-\## System Design
+## System Design
 
 
 
-\### Complaint History Model
+### Complaint History Model
 
 
 
@@ -138,7 +138,7 @@ Every status change is stored separately in `ComplaintStatusHistory`. Each histo
 
 
 
-\### Overdue Detection
+### Overdue Detection
 
 
 
@@ -150,7 +150,7 @@ When complaints are displayed, the application compares the complaint creation t
 
 
 
-\### Photo Handling
+### Photo Handling
 
 
 
@@ -162,7 +162,7 @@ Uploaded files are stored under the application's public upload area and referen
 
 
 
-\### Notification Flow
+### Notification Flow
 
 
 
@@ -178,7 +178,7 @@ Important society notices can also trigger resident notifications. SMTP credenti
 
 
 
-\### Authentication and Authorization
+### Authentication and Authorization
 
 
 
@@ -187,3 +187,43 @@ The application uses role-based authentication with `RESIDENT` and `ADMIN` roles
 
 
 Passwords are hashed using bcryptjs. Authentication uses JWT tokens stored in HTTP-only cookies. Server-side authorization checks ensure that residents can access only their own complaint data while administrators can manage complaints and administrative resources.
+
+
+
+## Demo / Evaluation Flow
+
+### Administrator
+Email: `admin@atrium.local`
+Password: `Admin@123`
+
+### Resident
+Email: `resident@atrium.local`
+Password: `Resident@123`
+
+### Resident Flow
+1. Sign in as a resident.
+2. Create a complaint with category, priority, description, and optional photo.
+3. View the complaint and its status history.
+4. When the admin changes the status, the resident receives an email.
+
+### Administrator Flow
+1. Sign in as administrator.
+2. Open the Admin Dashboard.
+3. View and filter complaints.
+4. Assign complaints and change priority/status.
+5. Add status/history notes.
+6. Create and manage notices.
+7. Mark a notice as Important to notify residents by email.
+
+### Email Notifications
+- New complaint → all administrators receive an email.
+- Complaint status change → affected resident receives an email.
+- Important notice → residents receive an email.
+
+Administrator notification emails are sent to users whose role is `ADMIN`. To change the notification address, update the email address of the administrator user in the database.
+
+### Live Application
+https://society-maintenance-tracker-rho-seven.vercel.app
+
+### GitHub Repository
+https://github.com/kasturirahul29-dotcom/society-maintenance-tracker
